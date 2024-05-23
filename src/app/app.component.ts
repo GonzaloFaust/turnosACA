@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
    this.openDialog()
 
-    this.location.getGeolocation().pipe(timeout(10000),catchError(()=>this.messages.dialogError) ).subscribe((location)=> !location?this.closeDialog():this.dialogMessage=this.messages.dialogFail)
+    this.location.getGeolocation().pipe(timeout(10000),catchError(()=>this.messages.dialogError) ).subscribe((location)=> location?this.closeDialog():this.dialogMessage=this.messages.dialogFail)
   }
 
   constructor(
