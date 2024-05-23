@@ -1,0 +1,131 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$turnos-web-primary: mat.define-palette(mat.$indigo-palette);
+$turnos-web-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$turnos-web-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$turnos-web-theme: mat.define-light-theme((
+  color: (
+    primary: $turnos-web-primary,
+    accent: $turnos-web-accent,
+    warn: $turnos-web-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($turnos-web-theme);
+
+/* You can add global styles to this file, and also import other style files */
+:root{
+    --clr-primary: rgb(40, 44, 135);
+    --clr-accent: rgb(255, 145, 0);
+}
+html, body { height: 100%; overflow-x: hidden;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; width:100%;}
+main{
+    margin: 2rem auto;
+    width:50%;
+}
+
+form{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom:4rem;
+}
+
+button{
+    margin-top: 1rem;
+}
+
+mat-form-field{
+    width:70%;
+    margin:1rem auto;
+}
+
+mat-error{
+    position: absolute;
+}
+
+button[type='submit']{
+    padding: 1rem;
+    width: 60%;
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--clr-primary);
+    cursor: pointer;
+}
+button:disabled{
+    background-color: gray;
+    cursor:none;
+}
+
+header{
+    width: 100%;
+    padding:30px 20px;
+    background-color: var(--clr-primary);
+    
+}
+header>img{
+    height: 40px;
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h1{
+    color:#666;
+
+}
+
+
+.dialog-wall{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--clr-primary);
+    color: white;
+    pointer-events: none;
+
+    >div{
+     position: absolute;   
+     left: 50%;
+     top:50%;
+     min-width: 200px;
+    transform: translateX(-50%) translateY(-50%);
+    }
+}
+
+@media only screen and (max-width: 600px){
+    main{
+        width:100%;
+        margin:2rem 0;
+    }
+}
