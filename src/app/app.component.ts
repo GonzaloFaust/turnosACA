@@ -5,10 +5,10 @@ import { LocationService } from './services/location.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import {MatDialog, MatDialogConfig, MatDialogModule} from '@angular/material/dialog'
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { catchError, timeout } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @Component({
@@ -16,7 +16,7 @@ import { catchError, timeout } from 'rxjs';
   standalone:true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule,FormsModule, ReactiveFormsModule, MatDialogModule]
+  imports: [MatFormFieldModule, MatInputModule, MatSelectModule,FormsModule, ReactiveFormsModule, HttpClientModule]
 })
 export class AppComponent implements OnInit {
 
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
    this.openDialog()
 
-    this.location.getGeolocation().pipe(timeout(10000),catchError(()=>this.messages.dialogError) ).subscribe((location)=> location?this.closeDialog():this.dialogMessage=this.messages.dialogFail)
+    this.location.getGeolocation().pipe(timeout(10000),catchError(()=>this.messages.dialogError) ).subscribe((location)=> !location?this.closeDialog():this.dialogMessage=this.messages.dialogFail)
   }
 
   constructor(
