@@ -82,15 +82,19 @@
           } 
         </mat-form-field>
      
-        <button mat-flat-button type="submit" [disabled]="form.invalid">
+        <button mat-flat-button type="submit" [disabled]="form.invalid || disableSubmit">
           Sacar Turno
         </button>
      
     </form>
     @if(dialogOpen){
-      
-
-      <div class="dialog-wall"><div><mat-icon [svgIcon]="dialogMessage.icon"></mat-icon><p>{{dialogMessage.text}}</p></div></div>
+      <div class="dialog-wall">
+        <div>
+          <mat-icon color="yellow" [svgIcon]="dialogMessage.icon">
+          </mat-icon>
+          <p>{{dialogMessage.text}}</p>
+        </div>
+      </div>
     }
 </main>
 <footer></footer>

@@ -1,10 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, retry, tap, throwError } from 'rxjs';
-interface Loc {
-  latitude: string;
-  longitude: string;
-}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +11,7 @@ export class LocationService {
     latitude: -31.889287,
   };
 
-  radio = 20000000;
+  radio = 2000000;
   constructor(private http: HttpClient) {}
 
   getGeolocation(): Observable<boolean> {

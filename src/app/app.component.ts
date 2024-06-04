@@ -21,6 +21,10 @@ import { DomSanitizer } from '@angular/platform-browser';
   imports: [MatFormFieldModule, MatInputModule, MatSelectModule,FormsModule, ReactiveFormsModule, HttpClientModule,MatIconModule, HttpClientModule]
 })
 export class AppComponent implements OnInit {
+  
+  dialogOpen:boolean=false;
+  dialogMessage!:DialogMessage;
+  disableSubmit:boolean=false;
 
   form = new FormGroup({
     apellido: new FormControl('', Validators.required),
@@ -41,8 +45,6 @@ export class AppComponent implements OnInit {
     fatalError: {text:"Hubo un problema al solicitar el turno, recargue la página e intente nuevamente", icon:'error'}
   }
 
-  dialogOpen=false;
-  dialogMessage:DialogMessage= this.dialogMessages.welcome;
   ngOnInit() {
    this.openDialog(this.dialogMessages.welcome)
 
@@ -62,12 +64,19 @@ export class AppComponent implements OnInit {
  
   private openDialog(message:any){
     this.dialogOpen=true
+    this.disableSubmit=true;
+    this.form.disable();
     this.dialogMessage= message;
   }
-  private closeDialog(){  this.dialogOpen=false; }
+  private closeDialog(){
+    this.form.enable(); 
+    this.disableSubmit=false;
+    this.dialogOpen=false;
+   }
 
   doPost(e:Event){
     e.preventDefault();
+    this.disableSubmit=true;
    this.sheets.post(this.form).subscribe((res:any)=>{this.openDialog(res?this.dialogMessages.success:this.dialogMessages.fatalError)})
    
   }

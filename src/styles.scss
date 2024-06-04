@@ -133,6 +133,11 @@ h1{
         >mat-icon{
             height: 50px;
             width: 50px;
+            
+            >svg{
+                
+                fill:var(--clr-accent);
+            }
         }
     }
 }
