@@ -1,28 +1,50 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SheetsService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  post() {
-    // const scriptURL =
-    //   'https://script.google.com/macros/s/AKfycbwxrr9gY3hHl86SuG0uv8nQa0NJHnmqFYqzCzrqM0w4wWDuE-B--j9r9iwch5FHZK6o/exec';
+  post(form: FormGroup):Observable<boolean> {
+    const scriptURL =
+      'https://script.google.com/macros/s/AKfycbwiNVEWY4RTq6ROPZEDoz2o1VKlRX8GiSsnYR60mNllsBP6ZquKvx5jwfzsnCVqCAUZgg/exec';
 
-    // const form = document.forms['contact-form'];
+      let formData= new FormData()
+      this.toFormData(formData, form)
 
-    // form.addEventListener('submit', (e) => {
-    //   e.preventDefault();
-    //   fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-    //     .then((response) =>
-    //       alert('Thank you! your form is submitted successfully.')
-    //     )
-    //     .then(() => {
-    //       window.location.reload();
-    //     })
-    //     .catch((error) => console.error('Error!', error.message));
-    // });
-    alert('coso')
+    return new Observable<boolean>((observer)=>{
+      this.http.post(scriptURL,formData).subscribe((res:any)=> {
+        observer.next(res.result=='success')
+        observer.complete()
+      })
+    }).pipe(
+        catchError((error) => {
+          return throwError(error);
+        })
+      )
+      //  fetch(scriptURL, { method: 'POST', body: formData })
+      //   .then((response) =>
+      //     response.status == 200
+      //   )
+      //   // .then(() => {
+      //   //   window.location.reload();
+      //   // })
+      //   .catch((error) => {return false});
   }
+
+
+  private toFormData(formData: FormData, formGroup: FormGroup) {
+    for (let key in formGroup.controls) {
+        if (formGroup.controls[key] instanceof FormGroup) {
+            this.toFormData(formData, formGroup.controls[key] as FormGroup);
+        }
+        else {
+            formData.append(key, formGroup.controls[key].value);
+        }
+    }
+}
 }
