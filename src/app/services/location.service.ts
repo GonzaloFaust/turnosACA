@@ -11,7 +11,7 @@ export class LocationService {
     latitude: -31.889287,
   };
 
-  radio = 2000000;
+  radio = 200000;
   constructor(private http: HttpClient) {}
 
   getGeolocation(): Observable<boolean> {
