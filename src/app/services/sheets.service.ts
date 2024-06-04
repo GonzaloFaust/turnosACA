@@ -13,7 +13,7 @@ export class SheetsService {
     const scriptURL =
       'https://script.google.com/macros/s/AKfycbwiNVEWY4RTq6ROPZEDoz2o1VKlRX8GiSsnYR60mNllsBP6ZquKvx5jwfzsnCVqCAUZgg/exec';
       const date = new Date();
-      form.addControl("timetoken", new FormControl(date.toLocaleDateString()+' '+ date.toLocaleTimeString()));
+      form.addControl("timetoken", new FormControl(date.toLocaleDateString()+' '+ date.toTimeString()));
       let formData= new FormData()
       this.toFormData(formData, form)
 
