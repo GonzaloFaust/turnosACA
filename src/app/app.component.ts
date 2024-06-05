@@ -11,14 +11,14 @@ import { catchError, timeout } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
  
 @Component({
   selector: 'app-root',
   standalone:true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule,FormsModule, ReactiveFormsModule, HttpClientModule,MatIconModule, HttpClientModule]
+  imports: [MatFormFieldModule, MatInputModule, MatSelectModule,FormsModule, ReactiveFormsModule, HttpClientModule,MatIconModule, HttpClientModule, MatProgressSpinnerModule]
 })
 export class AppComponent implements OnInit {
   
@@ -77,7 +77,11 @@ export class AppComponent implements OnInit {
   doPost(e:Event){
     e.preventDefault();
     this.disableSubmit=true;
-   this.sheets.post(this.form).subscribe((res:any)=>{this.openDialog(res?this.dialogMessages.success:this.dialogMessages.fatalError)})
+
+   this.sheets.post(this.form).subscribe((res:any)=>{
+    this.openDialog(res?this.dialogMessages.success:this.dialogMessages.fatalError)
+    this.disableSubmit=false;
+  })
    
   }
 }
